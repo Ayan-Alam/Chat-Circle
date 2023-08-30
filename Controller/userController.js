@@ -28,7 +28,7 @@ exports.addUser = async (req,res,next)=>{
 					await user.create({
 						name: name,
 						email: email,
-            phone : phone,
+                        phone : phone,
 						password: hash,
 					})
 					res.send(`<script>alert('User Created Successfully'); window.location.href = '/login'</script>`);

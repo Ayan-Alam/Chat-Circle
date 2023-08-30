@@ -8,6 +8,7 @@ document.getElementById('loginbtn').addEventListener('click',function(){
   console.log(result);
   alert('User LogIn Successfully');
   localStorage.setItem("token", result.data.token);
+  window.location.href ='/chat/application';
 })
 .catch((error) => {
   if (error.response) {
@@ -18,3 +19,18 @@ document.getElementById('loginbtn').addEventListener('click',function(){
   };
 })
 })
+/*  const messageContainer = document.getElementById("messageContainer");
+    const messageInput = document.getElementById("messageInput");
+    const sendButton = document.getElementById("sendButton");
+
+    sendButton.addEventListener("click", function() {
+      const messageText = messageInput.value.trim();
+      if (messageText !== "") {
+        const messageBlock = document.createElement("div");
+        messageBlock.className = "message-block other-message";
+        messageBlock.textContent = messageText;
+
+        messageContainer.appendChild(messageBlock);
+        messageInput.value = ""; 
+      }
+    });*/
