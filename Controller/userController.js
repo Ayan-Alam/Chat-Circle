@@ -40,3 +40,37 @@ exports.addUser = async (req,res,next)=>{
 	}
 }
 
+exports.getUser = async (req,res,next)=>{
+	try{
+		const email = req.body.loginEmail;
+		const password = req.body.loginPassword;
+		await user.findOne({where : {email : email}}).then((e)=>{
+			if(e){
+				bcrypt.compare(password,e.password,(err,result)=>{
+					if(err){
+						console.log(err);
+					}
+					if(result == true){
+						return res.status(200).json({
+							success: true,
+							message: "Login Successful!",
+							token: generateAccessToken(e.id),
+						  })
+						}else{
+							return res.status(404).json({
+								success: false,
+								message: "Password is incorrect!",
+							  });
+					}
+				})
+			}else{
+				return res.status(404).json({
+					success: false,
+					message: "User not Found!",
+				  });
+			}
+		})
+	}catch (err){
+		console.log(err);
+	}
+}
