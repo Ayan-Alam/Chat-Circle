@@ -8,7 +8,7 @@ exports.getApp = async(req,res,next)=>{
     res.sendFile(path.join(__dirname, '../', 'public', "views", 'chat.html'));
 }
 
-exports.msg = async (req,res,next)=>{
+exports.addMsg = async (req,res,next)=>{
     const msg = req.body.message;
     await chat.create({
         msg: msg,
@@ -20,4 +20,13 @@ exports.msg = async (req,res,next)=>{
       .catch((err) => {
         console.log(err);
       });
+}
+
+exports.getMsg = async(req,res,next)=>{
+  try {
+		const chats = await chat.findAll({ where: { userId: req.user.id } });
+		res.json(chats);
+	  } catch (err) {
+		console.log(err);
+	  }
 }
