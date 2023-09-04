@@ -1,15 +1,19 @@
-const Sequelize = require('sequelize');
+const sequelize = require("../utils/database");
+const Sequelize = require("sequelize");
 
-const sequelize = require('../utils/database');
-
-const chat = sequelize.define('chat',{
-    id:{
-        type : Sequelize.INTEGER,
-        autoIncrement : true,
-        allowNull : false,
-        primaryKey : true,
-      },
-   msg : Sequelize.STRING,
-})
+const chat = sequelize.define("chats", {
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  name: {
+    type: Sequelize.STRING,
+  },
+  message: {
+    type: Sequelize.STRING,
+  },
+});
 
 module.exports = chat;

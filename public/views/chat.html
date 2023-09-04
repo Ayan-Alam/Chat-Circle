@@ -1,71 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    .container {
-      flex: 1;
-      padding: 20px;
-    }
-
-    .message-container {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .message-block {
-      padding: 10px;
-      border-radius: 5px;
-      margin-bottom: 10px;
-      max-width: 70%;
-      word-wrap: break-word;
-    }
-
-    .other-message {
-      background-color: #f2f2f2;
-    }
-
-    .footer {
-      background-color: #f2f2f2;
-      padding: 10px;
-      text-align: center;
-      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .input-group {
-      margin-bottom: 20px;
-    }
-  </style>
-  <title>ChatCircle</title>
+    <meta charset="UTF-8">
+    <title>Chat Application</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/homepage.css" rel="stylesheet" />
 </head>
 <body>
-  <div class="container">
-    <div class="message-container" id="messageContainer">
-    </div>
-  </div>
-  <div class="footer">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <div class="container">
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" id="messageInput" placeholder="Enter your message...">
-        <div class="input-group-append">
-          <button class="btn btn-primary" id="sendButton">Send</button>
+        <div class="row clearfix">
+            <div class="col-lg-12">
+                <div class="card chat-app">
+                    <div id="plist" class="people-list">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                            </div>
+                        </div>
+                        <ul class="list-unstyled chat-list mt-2 mb-0">
+                            <li class="clearfix">
+                                <div class="about">
+                                    <div class="name">Vincent Porter</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="chat">
+                        <div class="chat-header clearfix">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="chat-about">
+                                        <h5 class="m-b-0">Room</h5>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 hidden-sm text-right">
+                                    <button class="btn chat-options-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Options
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="optionsDropdown">
+                                        <a class="dropdown-item" href="#">Room Members</a>
+                                        <a class="dropdown-item" href="#">Create Room</a>
+                                        <a class="dropdown-item" href="#">Add to Room</a>
+                                        <a class="dropdown-item" href="#">Delete from Room</a>
+                                        <a class="dropdown-item" href="#">Logout</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-history " id="chat-messages">
+                            <ul class="m-b-0" id="messageContainer">
+                           <!--    <li class="clearfix">
+                                   <div class="message-data text-right">
+                                 <span class="message-data-time">10:10 AM, Today</span>
+                                    </div>
+                                    <div class="message other-message float-right"> Hi Aiden, how are you? How is the project coming along? </div>
+                                </li>
+                                <li class="clearfix">
+                                    <div class="message-data">
+                                        <span class="message-data-time">10:12 AM, Today</span>
+                                    </div>
+                                    <div class="message my-message">Are we meeting today?</div>                                    
+                                </li>                               
+                                <li class="clearfix">
+                                    <div class="message-data">
+                                        <span class="message-data-time">10:15 AM, Today</span>
+                                    </div>
+                                    <div class="message my-message">Project has been already finished and I have results to show you.</div>
+                                </li>-->
+                            </ul>
+                    </div>
+                        <div class="chat-message clearfix">
+                            <div class="input-group mb-0">
+                                <div class="input-group-prepend" id="sendButton">
+                                    <span class="input-group-text"><i class="fa fa-send"></i></span>
+                                </div>
+                                <input type="text" class="form-control" id="messageInput" placeholder="Enter text here...">                                    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="js/chat.js"></script>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="js/chat.js"></script>
 </body>
 </html>
 
