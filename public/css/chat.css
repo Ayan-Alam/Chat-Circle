@@ -256,9 +256,10 @@ body{
 }
 
 .chat-history{
-    max-height: 400px; 
+    height: 400px;
+    max-height: 600px; 
     overflow-y: auto; 
-    border-bottom-left-radius: 15px; 
+    border-bottom-left-radius: 12px; 
     border-bottom-right-radius: 15px;
     padding: 10px;
 }
