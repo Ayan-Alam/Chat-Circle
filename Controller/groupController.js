@@ -4,6 +4,26 @@ const Group = require('../models/groupModel');
 const User = require('../models/userModel');
 const UserGroup = require('../models/userGroup');
 
+exports.getMember = async (req,res,next)=>{
+  try{
+    const grpName = req.params.grpName;
+    const group = await Group.findOne({ where: { name: grpName } });
+      const allMember = await UserGroup.findAll({where: {groupId : group.dataValues.id}});
+      const users = [];
+    await Promise.all(
+      allMember.map(async (user) => {
+        const res = await User.findOne({
+          where: { id: user.dataValues.userId },
+        });
+        users.push(res);
+      })
+    );
+    res.status(200).json({ users: users });
+    }catch (err){
+    console.log(err);
+  }
+}
+
 exports.createGrp = async (req,res,next)=>{
     try{
         const name = req.body.name;
@@ -45,10 +65,11 @@ exports.addGrp = async(req,res,next)=>{
   if(group){
     const admin =  await UserGroup.findOne({
       where: {
-        [Op.and]: [{ isadmin: 1 }, { groupId: group.id }],
+        [Op.and]: [{ isadmin: 1 },{userId : req.user.id},{ groupId: group.id }],
       },
   })
-  if(admin.userId == req.user.id){
+  console.log(admin);
+  if(admin){
     const invitedMembers = await User.findOne({ where: {name:member}})
     if(invitedMembers){  
     const response = await UserGroup.create({
@@ -75,10 +96,10 @@ exports.deleteGrp = async(req,res,next)=>{
   if(group){
     const admin =  await UserGroup.findOne({
       where: {
-        [Op.and]: [{ isadmin: 1 }, { groupId: group.id }],
+        [Op.and]: [{ isadmin: 1 },{userId : req.user.id},{ groupId: group.id }],
       },
   })
-  if(admin.userId == req.user.id){
+  if(admin){
     const invitedMembers = await User.findOne({ where: {name:member}})
     if(invitedMembers){  
     const response = await UserGroup.destroy({where:{

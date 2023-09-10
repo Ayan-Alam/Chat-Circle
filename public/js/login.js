@@ -19,18 +19,3 @@ document.getElementById('loginbtn').addEventListener('click',function(){
   };
 })
 })
-/*  const messageContainer = document.getElementById("messageContainer");
-    const messageInput = document.getElementById("messageInput");
-    const sendButton = document.getElementById("sendButton");
-
-    sendButton.addEventListener("click", function() {
-      const messageText = messageInput.value.trim();
-      if (messageText !== "") {
-        const messageBlock = document.createElement("div");
-        messageBlock.className = "message-block other-message";
-        messageBlock.textContent = messageText;
-
-        messageContainer.appendChild(messageBlock);
-        messageInput.value = ""; 
-      }
-    });*/

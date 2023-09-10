@@ -5,6 +5,7 @@ const cors = require('cors');
 const userRoutes = require('./Routes/userRoutes');
 const chatRoutes = require('./Routes/chatRoutes');
 const groupRoutes = require('./Routes/groupRoutes');
+const adminRoutes = require('./Routes/adminRoutes');
 
 const User = require('./models/userModel');
 const Chat = require('./models/chatModel');
@@ -21,6 +22,7 @@ app.use('/login',userRoutes);
 app.use('/post',userRoutes);
 app.use('/chat',chatRoutes);
 app.use('/grp',groupRoutes);
+app.use('/admin',adminRoutes);
 
 
 User.hasMany(Chat, { onDelete: "CASCADE", hooks: true });

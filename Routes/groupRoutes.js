@@ -5,6 +5,8 @@ const userAuthentication = require("../middleware/Auth");
 
 router.use(express.static("public"))
 
+router.get('/getMember/:grpName',userAuthentication,groupController.getMember);
+
 router.post('/createGrp',userAuthentication,groupController.createGrp);
 
 router.get('/getGrp',userAuthentication,groupController.getGrp);

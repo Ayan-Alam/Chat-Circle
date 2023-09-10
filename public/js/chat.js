@@ -61,7 +61,7 @@ async function getGrp(){
           const newRow = `
           <li class="clearfix">
           <div class="about">
-              <div class="name">${e.name}</div>
+              <div class="name"><h3>${e.name}</h3></div>
           </div>
       </li>
           `;
@@ -119,8 +119,8 @@ async function grpList(){
 
 async function addGrp(){
   const token = localStorage.getItem("token");
-  const grpName = document.getElementById('inputField').value;
-  const member = document.getElementById('nameField').value;
+  const grpName = document.getElementById('addinputField').value;
+  const member = document.getElementById('addnameField').value;
   const response = await axios.post('http://localhost:3000/grp/addGrp',{
     grpName : grpName,
     member : member
@@ -129,7 +129,6 @@ async function addGrp(){
     headers: { Authorization: token },
   })
   alert(response.data.message);
-  window.location.reload();
 }
 
 function logout() {
@@ -149,11 +148,60 @@ async function deleteGrp(){
     headers: { Authorization: token },
   })
   alert(response.data.message);
-  window.location.reload();
+}
+
+async function getMember(){
+  const token = localStorage.getItem("token");
+  const members = document.getElementById('listMember');
+  const grpName = document.getElementById('grp').textContent;
+  members.innerHTML = "";
+  const response = await axios.get(`http://localhost:3000/grp/getMember/${grpName}`,{headers: { Authorization: token }});
+  response.data.users.forEach((e) => {
+      const newRow = `
+      <tr>
+          <td>${e.name}</td>
+      </tr>
+      `;
+      members.insertAdjacentHTML("beforeend",newRow);
+      }
+    );
+}
+
+async function addAdmin(){
+  const token = localStorage.getItem("token");
+  const grpName = document.getElementById('admininputField').value;
+  const member = document.getElementById('adminnameField').value; 
+  const response = await axios.post('http://localhost:3000/admin/addAdmin',
+  {
+    grpName: grpName,
+    member : member 
+  },
+  {
+    headers: { Authorization: token },
+  })
+  alert(response.data.message);
+}
+
+async function removeAdmin(){
+  const token = localStorage.getItem("token");
+  const grpName = document.getElementById('removeinputField').value;
+  const member = document.getElementById('remvoenameField').value; 
+  const response = await axios.post('http://localhost:3000/admin/removeAdmin',
+  {
+    grpName: grpName,
+    member : member 
+  },
+  {
+    headers: { Authorization: token },
+  })
+  alert(response.data.message);
 }
 
 document.getElementById('add').addEventListener('click',addGrp);
 document.getElementById('Name').addEventListener('click',createGrp);
 document.getElementById('logout').addEventListener('click',logout);
 document.getElementById('delete').addEventListener('click',deleteGrp);
+document.getElementById('grpmem').addEventListener('click',getMember);
+document.getElementById('addAdmins').addEventListener('click',addAdmin);
+document.getElementById('removeAdmins').addEventListener('click',removeAdmin);
 document.addEventListener('DOMContentLoaded',getGrp);
