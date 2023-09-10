@@ -68,7 +68,6 @@ exports.addGrp = async(req,res,next)=>{
         [Op.and]: [{ isadmin: 1 },{userId : req.user.id},{ groupId: group.id }],
       },
   })
-  console.log(admin);
   if(admin){
     const invitedMembers = await User.findOne({ where: {name:member}})
     if(invitedMembers){  

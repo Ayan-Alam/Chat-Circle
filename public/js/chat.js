@@ -1,5 +1,10 @@
 const sendButton = document.getElementById("sendButton");
 
+const socket = io("http://localhost:4000");
+socket.on("data", (data) => {
+  console.log(data);
+});
+
 function decodeToken(token) {
   const base64Url = token.split(".")[1];
   const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
@@ -19,9 +24,10 @@ async function getMessage(grpName){
   const token = localStorage.getItem("token");
   const decodedToken = decodeToken(token);
   const userId = decodedToken.userId;
+  socket.emit("getMessage", grpName);
+  socket.on("messages", async (messages) => {
   messageContainer.innerHTML = "";
-  const response = await axios.get(`http://localhost:3000/chat/getMsg/${grpName}`,{ headers : { Authorization : token }});
-  response.data.forEach((e) => {
+  messages.forEach((e) => {
   const messageText = e.message;
     if (messageText !== "") {
       if(userId === e.userId){
@@ -46,6 +52,7 @@ async function getMessage(grpName){
       }
     }
     });
+  })
 }
 
 async function getGrp(){
@@ -88,14 +95,16 @@ async function createGrp(){
 
 document.getElementById('sendButton').addEventListener('click',async function(){
     try{
-   const grp = document.getElementById('grp');
+   let grp = document.getElementById('grp');
    if(grp.innerHTML === 'Group'){
     alert('Select a Group');
    }else {
    const token = localStorage.getItem("token");
    const message = messageInput.value;
    const response =  await axios.post('http://localhost:3000/chat/addMsg',{message:message,grp : grp.innerHTML},{ headers: { Authorization: token } });
-   console.log(response.data);
+   grp = document.getElementById('grp').textContent;
+   console.log(grp);
+   getMessage(grp);
    }
     } catch (err){
         console.log(err);

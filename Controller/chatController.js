@@ -4,6 +4,15 @@ const user = require('../models/userModel');
 const chat = require('../models/chatModel');
 const Group = require('../models/groupModel');
 
+const io = require("socket.io")(4000, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["my-custom-header"],
+    credentials: true,
+  },
+});
+
 exports.getApp = async(req,res,next)=>{
     res.sendFile(path.join(__dirname, '../', 'public', "views", 'chat.html'));
 }
@@ -25,15 +34,17 @@ exports.addMsg = async (req,res,next)=>{
   }
 }
 
-exports.getMsg = async(req,res,next)=>{
-  try {
-    const grpName = req.params.grpName;
-    const group = await Group.findOne({where:{name : grpName}});
-		const chats = await chat.findAll({
-      where: { groupId: group.id },
-    });
-		res.json(chats);
-	  } catch (err) {
-		console.log(err);
-	  }
-}
+io.on("connection", (socket) => {
+  socket.on("getMessage", async (grpName) => {
+    try {
+      const group = await Group.findOne({ where: { name: grpName } });
+      const chats = await chat.findAll({
+        where: { groupId: group.id },
+      });
+      console.log("Request Made");
+      io.emit("messages", chats);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+});

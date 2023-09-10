@@ -16,14 +16,13 @@ const app = express();
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
-
 app.use(cors());
+
 app.use('/login',userRoutes);
 app.use('/post',userRoutes);
 app.use('/chat',chatRoutes);
 app.use('/grp',groupRoutes);
 app.use('/admin',adminRoutes);
-
 
 User.hasMany(Chat, { onDelete: "CASCADE", hooks: true });
 
