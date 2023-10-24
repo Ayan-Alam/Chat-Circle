@@ -1,7 +1,9 @@
 const express = require('express');
-const sequelize = require('./utils/database');
 const cors = require('cors');
+const dotenv = require("dotenv");
+dotenv.config();
 
+const sequelize = require('./utils/database');
 const userRoutes = require('./Routes/userRoutes');
 const chatRoutes = require('./Routes/chatRoutes');
 const groupRoutes = require('./Routes/groupRoutes');

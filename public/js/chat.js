@@ -103,7 +103,7 @@ document.getElementById('sendButton').addEventListener('click',async function(){
    const message = messageInput.value;
    const response =  await axios.post('http://localhost:3000/chat/addMsg',{message:message,grp : grp.innerHTML},{ headers: { Authorization: token } });
    grp = document.getElementById('grp').textContent;
-   console.log(grp);
+   messageInput.value = " ";
    getMessage(grp);
    }
     } catch (err){
